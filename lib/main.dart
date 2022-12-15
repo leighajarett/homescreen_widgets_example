@@ -31,6 +31,12 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: Text('MY LOGO')),
-        body: Center(child: Text(headline.title!)));
+        body: Center(
+            child: Column(
+          children: [
+            Text(headline.title!),
+            Text(headline.description!),
+          ],
+        )));
   }
 }
