@@ -32,6 +32,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   late NewsArticle headline;
 
+  @override
   void initState() {
     super.initState();
     // Mock read in some data
@@ -40,6 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
     HomeWidget.setAppGroupId('group.leigha.widget');
     // Save the headline data to the widget
     HomeWidget.saveWidgetData<String>('headline_title', headline.title);
+
     HomeWidget.saveWidgetData<String>(
         'headline_description', headline.description);
   }
