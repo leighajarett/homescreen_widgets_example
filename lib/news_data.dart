@@ -1,27 +1,27 @@
 // Mock up some news article data
 
-class newsArticle {
+class NewsArticle {
   String? title;
   String? description;
 
-  newsArticle({
+  NewsArticle({
     this.title,
     this.description,
   });
 }
 
-List<newsArticle> getNewsStories() {
-  List<newsArticle> news = [];
+List<NewsArticle> getNewsStories() {
+  List<NewsArticle> news = [];
   news = [
-    newsArticle(
+    NewsArticle(
       title: "News 1",
       description: "Description 1",
     ),
-    newsArticle(
+    NewsArticle(
       title: "News 2",
       description: "Description 2",
     ),
-    newsArticle(
+    NewsArticle(
       title: "News 3",
       description: "Description 3",
     )
