@@ -8,47 +8,59 @@
 import WidgetKit
 import SwiftUI
 
+// TimelineProvider has three methods
 struct Provider: TimelineProvider {
-    func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date())
+
+// Placeholder is used as a placholder when the widget is first displayed
+    func placeholder(in context: Context) -> NewsArticleEntry {
+//      Add some placholder title and description, and get the current date
+      NewsArticleEntry(date: Date(), title: "Placholder Title", description: "Placholder description")
     }
 
-    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date())
+// Snapshot entry represents the current time and state
+    func getSnapshot(in context: Context, completion: @escaping (NewsArticleEntry) -> ()) {
+//      Get the data from the user defaults to display
+        let data = UserDefaults.init(suiteName:"group.leigha.widget")
+        let entry = NewsArticleEntry(date: Date(), title: data?.string(forKey: "title") ?? "No Title Set", description: data?.string(forKey: "description") ?? "No Description Set")
         completion(entry)
     }
 
+//    getTimeline is called for the current and optionally future times to update the widget
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        var entries: [SimpleEntry] = []
-
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-        let currentDate = Date()
-        for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate)
-            entries.append(entry)
-        }
-
-        let timeline = Timeline(entries: entries, policy: .atEnd)
-        completion(timeline)
+//      This just uses the snapshot function we defined earlier
+      getSnapshot(in: context) { (entry) in
+// atEnd policy tells widgetkit to request a new entry after the date has passed
+        let timeline = Timeline(entries: [entry], policy: .atEnd)
+                  completion(timeline)
+              }
     }
 }
 
-struct SimpleEntry: TimelineEntry {
+
+// The date and any data you want to pass into your app must conform to TimelineEntry
+struct NewsArticleEntry: TimelineEntry {
     let date: Date
+    let title: String
+    let description:String
 }
 
+//View that holds the contents of the widegt
 struct NewsWidgetsEntryView : View {
     var entry: Provider.Entry
 
     var body: some View {
-        Text(entry.date, style: .time)
+      VStack {
+        Text(entry.title)
+        Text(entry.description)
+      }
     }
 }
 
 struct NewsWidgets: Widget {
+//  Identifier for the widget
     let kind: String = "NewsWidgets"
 
+// Configuration for the widget
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
             NewsWidgetsEntryView(entry: entry)
@@ -60,7 +72,7 @@ struct NewsWidgets: Widget {
 
 struct NewsWidgets_Previews: PreviewProvider {
     static var previews: some View {
-        NewsWidgetsEntryView(entry: SimpleEntry(date: Date()))
+        NewsWidgetsEntryView(entry: NewsArticleEntry(date: Date(), title: "Preview Title", description: "Preview description"))
             .previewContext(WidgetPreviewContext(family: .systemSmall))
     }
 }
