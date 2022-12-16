@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:math';
 
 import 'package:flutter/foundation.dart';
@@ -12,6 +14,8 @@ import 'package:workmanager/workmanager.dart';
 void backgroundCallback(Uri? data) async {
   print("backgroundCallback URI = $data}");
 
+  // This is example code from the HomeWidget project, and will need to be updated.
+  // It does demonstrate how we might make the widget interactive, though.
   if (data!.host == 'titleclicked') {
     final greetings = [
       'Hello',
@@ -75,7 +79,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
     // Register Callback to be called by Android
     HomeWidget.registerBackgroundCallback(backgroundCallback);
+  }
 
+  void saveWidgetData() {
     // Save the headline data to the widget
     try {
       HomeWidget.saveWidgetData<String>('headline_title', headline.title);
@@ -101,7 +107,9 @@ class _MyHomePageState extends State<MyHomePage> {
   void getData() {
     Future.wait([
       HomeWidget.getWidgetData<String>('headline_title', defaultValue: 'News 1')
-    ]).then((value) => print(value));
+    ]).then(
+      (value) => print(value),
+    );
   }
 
   @override

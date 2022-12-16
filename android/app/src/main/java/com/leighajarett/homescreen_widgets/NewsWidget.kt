@@ -50,7 +50,7 @@ class NewsWidget : HomeWidgetProvider() {
 
             appWidgetManager.updateAppWidget(appWidgetId, views)
         }
-        }
+    }
 
 
     override fun onEnabled(context: Context) {
