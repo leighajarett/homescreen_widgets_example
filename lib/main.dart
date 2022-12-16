@@ -38,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // Mock read in some data
     headline = getNewsStories()[0];
     // Set the group ID
-    HomeWidget.setAppGroupId('group.leigha.widget');
+    HomeWidget.setAppGroupId('group.leighawidget');
     // Save the headline data to the widget
     HomeWidget.saveWidgetData<String>('headline_title', headline.title);
 
@@ -48,6 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    print('this is flutter');
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(8.0),
