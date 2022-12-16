@@ -11,6 +11,7 @@ import SwiftUI
 @main
 struct NewsWidgetsBundle: WidgetBundle {
     var body: some Widget {
+        let _ = print("test in main")
         NewsWidgets()
     }
 }

@@ -35,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // Mock read in some data
     headline = getNewsStories()[0];
     // Set the group ID
-    HomeWidget.setAppGroupId('group.leigha.widget');
+    HomeWidget.setAppGroupId('group.leighawidget');
     // Save the headline data to the widget
     HomeWidget.saveWidgetData<String>('headline_title', headline.title);
     HomeWidget.saveWidgetData<String>(
@@ -44,6 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    print('this is flutter');
     return Scaffold(
         appBar: AppBar(title: Text('MY LOGO')),
         body: Center(
