@@ -14,7 +14,7 @@ struct Provider: TimelineProvider {
 // Placeholder is used as a placholder when the widget is first displayed
     func placeholder(in context: Context) -> NewsArticleEntry {
 //      Add some placholder title and description, and get the current date
-      NewsArticleEntry(date: Date(), title: "Placholder Title", description: "Placholder description")
+      NewsArticleEntry(date: Date(), title: "Placholder Title", description: "Placholder description", filename: "No screenshot available",  displaySize: context.displaySize)
     }
 
 // Snapshot entry represents the current time and state
@@ -28,7 +28,8 @@ struct Provider: TimelineProvider {
         let userDefaults = UserDefaults(suiteName: "group.leighawidget")
         let title = userDefaults?.string(forKey: "headline_title") ?? "No Title Set"
         let description = userDefaults?.string(forKey: "headline_description") ?? "No Description Set"
-        entry = NewsArticleEntry(date: Date(), title: title, description: description)
+        let filename = userDefaults?.string(forKey: "filename") ?? "No screenshot available"
+        entry = NewsArticleEntry(date: Date(), title: title, description: description, filename: filename,  displaySize: context.displaySize)
       }
         completion(entry)
     }
@@ -50,18 +51,26 @@ struct NewsArticleEntry: TimelineEntry {
     let date: Date
     let title: String
     let description:String
+    let filename: String
+    let displaySize: CGSize
 }
 
 //View that holds the contents of the widegt
 struct NewsWidgetsEntryView : View {
-    var entry: Provider.Entry
+  var entry: Provider.Entry
 
-    var body: some View {
-      VStack {
-        Text(entry.title)
-        Text(entry.description)
+  var body: some View {
+    let path = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.leighawidget")?.appendingPathComponent(entry.filename).path
+    VStack {
+      Text(entry.title)
+      Text(entry.description)
+      if FileManager.default.fileExists(atPath: path!) {
+        Image(uiImage: UIImage(contentsOfFile: path! )!)
+          .resizable()
+          .frame(width: entry.displaySize.height*0.7, height: entry.displaySize.height*0.7, alignment: .center)
       }
     }
+  }
 }
 
 struct NewsWidgets: Widget {
@@ -78,9 +87,9 @@ struct NewsWidgets: Widget {
     }
 }
 
-struct NewsWidgets_Previews: PreviewProvider {
-    static var previews: some View {
-        NewsWidgetsEntryView(entry: NewsArticleEntry(date: Date(), title: "Preview Title", description: "Preview description"))
-            .previewContext(WidgetPreviewContext(family: .systemSmall))
-    }
-}
+//struct NewsWidgets_Previews: PreviewProvider {
+//    static var previews: some View {
+//        NewsWidgetsEntryView(entry: NewsArticleEntry(date: Date(), title: "Preview Title", description: "Preview description", filename: "No Screenshot available"))
+//            .previewContext(WidgetPreviewContext(family: .systemSmall))
+//    }
+//}
