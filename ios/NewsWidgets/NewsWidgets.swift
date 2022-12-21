@@ -19,18 +19,22 @@ struct Provider: TimelineProvider {
 
 // Snapshot entry represents the current time and state
     func getSnapshot(in context: Context, completion: @escaping (NewsArticleEntry) -> ()) {
-//      Get the data from the user defaults to display
+      let entry: NewsArticleEntry
+      if context.isPreview{
+        entry = placeholder(in: context)
+      }
+      else{
+        //      Get the data from the user defaults to display
         let userDefaults = UserDefaults(suiteName: "group.leighawidget")
         let title = userDefaults?.string(forKey: "headline_title") ?? "No Title Set"
         let description = userDefaults?.string(forKey: "headline_description") ?? "No Description Set"
-
-        let entry = NewsArticleEntry(date: Date(), title: title, description: description)
+        entry = NewsArticleEntry(date: Date(), title: title, description: description)
+      }
         completion(entry)
     }
 
 //    getTimeline is called for the current and optionally future times to update the widget
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-      print("timeline")
 //      This just uses the snapshot function we defined earlier
       getSnapshot(in: context) { (entry) in
 // atEnd policy tells widgetkit to request a new entry after the date has passed

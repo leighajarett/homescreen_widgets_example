@@ -20,6 +20,8 @@
 		9A19615B2949106F00B6DEF1 /* NewsWidgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A19615A2949106F00B6DEF1 /* NewsWidgets.swift */; };
 		9A19615D2949107200B6DEF1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9A19615C2949107200B6DEF1 /* Assets.xcassets */; };
 		9A1961612949107200B6DEF1 /* NewsWidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 9A1961542949106F00B6DEF1 /* NewsWidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		9AC41BA1294D1BDB008BE4B7 /* HanaleiFill-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9AC41BA0294D1BDB008BE4B7 /* HanaleiFill-Regular.ttf */; };
+		9AC41BA2294D1BDB008BE4B7 /* HanaleiFill-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9AC41BA0294D1BDB008BE4B7 /* HanaleiFill-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +83,7 @@
 		9A19615E2949107200B6DEF1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9A196166294B5CAB00B6DEF1 /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
 		9A196167294B5E6900B6DEF1 /* NewsWidgetsExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NewsWidgetsExtension.entitlements; sourceTree = "<group>"; };
+		9AC41BA0294D1BDB008BE4B7 /* HanaleiFill-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "HanaleiFill-Regular.ttf"; sourceTree = "<group>"; };
 		B44772D9F11407C501C20081 /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
 		EEF988607CF8EB05C9B5991A /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -113,7 +116,6 @@
 				EEF988607CF8EB05C9B5991A /* Pods-Runner.release.xcconfig */,
 				B44772D9F11407C501C20081 /* Pods-Runner.profile.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -179,6 +181,7 @@
 		9A1961572949106F00B6DEF1 /* NewsWidgets */ = {
 			isa = PBXGroup;
 			children = (
+				9AC41BA0294D1BDB008BE4B7 /* HanaleiFill-Regular.ttf */,
 				9A1961582949106F00B6DEF1 /* NewsWidgetsBundle.swift */,
 				9A19615A2949106F00B6DEF1 /* NewsWidgets.swift */,
 				9A19615C2949107200B6DEF1 /* Assets.xcassets */,
@@ -275,6 +278,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */,
+				9AC41BA1294D1BDB008BE4B7 /* HanaleiFill-Regular.ttf in Resources */,
 				3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */,
 				97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */,
 				97C146FC1CF9000F007C117D /* Main.storyboard in Resources */,
@@ -286,6 +290,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A19615D2949107200B6DEF1 /* Assets.xcassets in Resources */,
+				9AC41BA2294D1BDB008BE4B7 /* HanaleiFill-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
