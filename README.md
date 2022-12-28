@@ -1,16 +1,10 @@
-# homescreen_widgets
+# Home Screen Widgets Examples
+A dummy Flutter app with examples of various homescreen widgets. 
 
-A new Flutter project.
+## main
+Main branch has the starter code for a very basic app
 
-## Getting Started
+## widget_1
+Widget 1 branch has the additional code for creating a text based widget that receives data from the key-value store. 
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
