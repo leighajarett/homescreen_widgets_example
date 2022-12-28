@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_widget/home_widget.dart';
 import 'package:homescreen_widgets/news_data.dart';
 
 import 'color_schemes.g.dart';
@@ -22,8 +23,26 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  late NewsArticle headline;
+
+  void initState() {
+    super.initState();
+    // Mock read in some data
+    headline = getNewsStories()[0];
+    // Set the group ID
+    HomeWidget.setAppGroupId('group.leigha.widget');
+    // Save the headline data to the widget
+    HomeWidget.saveWidgetData<String>('headline_title', headline.title);
+    HomeWidget.saveWidgetData<String>(
+        'headline_description', headline.description);
+  }
 
   @override
   Widget build(BuildContext context) {
