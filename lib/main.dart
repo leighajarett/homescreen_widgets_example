@@ -48,7 +48,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    print('this is flutter');
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(8.0),
