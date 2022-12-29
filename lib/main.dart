@@ -1,10 +1,17 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:home_widget/home_widget.dart';
+import 'package:home_widget/home_widget_callback_dispatcher.dart';
+import 'package:homescreen_widgets/homescreen_utils.dart';
 import 'package:homescreen_widgets/news_data.dart';
+import 'package:workmanager/workmanager.dart';
 
 import 'color_schemes.g.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  Workmanager().initialize(callbackDispatcher, isInDebugMode: kDebugMode);
+
   runApp(const MyApp());
 }
 
@@ -44,6 +51,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
     HomeWidget.saveWidgetData<String>(
         'headline_description', headline.description);
+
+    HomeWidget.registerBackgroundCallback(HomescreenUtils.backgroundCallback);
   }
 
   @override
@@ -54,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           children: [
             const SizedBox(height: 20),
-            Image.asset('images/FlutterForward_Logo_Dark_Gradient.png'),
+            Image.asset('assets/images/FlutterForward_Logo_Dark_Gradient.png'),
             const SizedBox(height: 30),
             Container(
               padding: const EdgeInsets.all(16.0),
