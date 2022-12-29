@@ -33,7 +33,7 @@ class MyHomePage extends StatelessWidget {
         child: Column(
           children: [
             const SizedBox(height: 20),
-            Image.asset('images/FlutterForward_Logo_Dark_Gradient.png'),
+            Image.asset('assets/images/FlutterForward_Logo_Dark_Gradient.png'),
             const SizedBox(height: 30),
             Container(
               padding: const EdgeInsets.all(16.0),
@@ -94,7 +94,7 @@ class MyHomePage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Center(
-                        child: Image.asset('images/${article.image}'),
+                        child: Image.asset('assets/images/${article.image}'),
                       ),
                     ),
                   const SizedBox(height: 10.0),
