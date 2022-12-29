@@ -3,11 +3,14 @@ package com.leighajarett.homescreen_widgets
 import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.widget.RemoteViews
 import es.antonborri.home_widget.HomeWidgetBackgroundIntent
 import es.antonborri.home_widget.HomeWidgetLaunchIntent
 import es.antonborri.home_widget.HomeWidgetProvider
+import java.io.File
 
 /**
  * Implementation of App Widget functionality.
@@ -45,6 +48,13 @@ class NewsWidget : HomeWidgetProvider() {
                     MainActivity::class.java,
                     Uri.parse("homewidgetexample://message?message=$message"))
                 setOnClickPendingIntent(R.id.headline_description, pendingIntentWithData)
+
+
+                // Set the widget image
+                val imageName = widgetData.getString("filename", null)
+                val imageFile = File("${R.string.widget_image_directory_path}${imageName}")
+                val myBitmap: Bitmap = BitmapFactory.decodeFile(imageFile.absolutePath)
+                setImageViewBitmap(R.id.widget_image, myBitmap)
             }
 
             appWidgetManager.updateAppWidget(appWidgetId, views)

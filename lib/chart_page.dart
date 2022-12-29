@@ -46,7 +46,11 @@ class _ChartPageState extends State<ChartPage> {
       await file.writeAsBytes(image);
 
       HomeWidget.saveWidgetData<String>('filename', fileName);
-      HomeWidget.updateWidget(iOSName: 'NewsWidgets');
+      HomeWidget.updateWidget(
+        name: 'NewsWidget',
+        androidName: 'NewsWidget',
+        iOSName: 'NewsWidgets',
+      );
       setState(() {
         imagePath = file.path;
         debugPrint(imagePath);
