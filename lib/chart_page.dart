@@ -6,9 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:home_widget/home_widget.dart';
-import 'package:homescreen_widgets/homescreen_utils.dart';
-
-import 'news_data.dart';
 
 class ChartPage extends StatefulWidget {
   const ChartPage({Key? key}) : super(key: key);
@@ -64,12 +61,6 @@ class _ChartPageState extends State<ChartPage> {
     }
   }
 
-  void updateHeadline(NewsArticle newHeadline) {
-    setState(() {
-      HomescreenUtils.updateHeadline(newHeadline);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -92,16 +83,6 @@ class _ChartPageState extends State<ChartPage> {
               ),
             ),
             const SizedBox(height: 60),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 50.0),
-              child: CupertinoButton.filled(
-                child: const Text("update widget article"),
-                onPressed: () {
-                  updateHeadline(getNewsStories()[1]);
-                },
-              ),
-            ),
-            const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50.0),
               child: CupertinoButton.filled(

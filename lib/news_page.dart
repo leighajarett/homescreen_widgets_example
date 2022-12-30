@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:home_widget/home_widget.dart';
 
 import 'news_data.dart';
 
@@ -54,6 +56,17 @@ class NewsListPage extends StatelessWidget {
     );
   }
 
+  void updateHeadline(NewsArticle newHeadline) {
+    // Save the headline data to the widget
+    HomeWidget.saveWidgetData<String>('headline_title', newHeadline.title);
+    HomeWidget.saveWidgetData<String>(
+        'headline_description', newHeadline.description);
+    HomeWidget.updateWidget(
+      iOSName: 'NewsWidgets',
+      androidName: 'NewsWidget',
+    );
+  }
+
   // TODO: Use deep linking, if we want to add the feature of clicking on an article from the homescreen widget
   void _showArticlePage(BuildContext context, NewsArticle article) {
     Navigator.of(context).push(
@@ -84,6 +97,17 @@ class NewsListPage extends StatelessWidget {
                   Text(article.articleText),
                   const SizedBox(height: 8),
                   Text(article.articleText),
+                  const Divider(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 50.0, vertical: 10.0),
+                    child: CupertinoButton.filled(
+                      child: const Text("update widget article"),
+                      onPressed: () {
+                        updateHeadline(article);
+                      },
+                    ),
+                  ),
                 ],
               ),
             ),
