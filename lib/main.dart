@@ -1,13 +1,19 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:home_widget/home_widget.dart';
+import 'package:home_widget/home_widget_callback_dispatcher.dart';
 import 'package:homescreen_widgets/chart_page.dart';
+import 'package:homescreen_widgets/homescreen_utils.dart';
 import 'package:homescreen_widgets/news_data.dart';
+import 'package:workmanager/workmanager.dart';
 
 import 'color_schemes.g.dart';
 import 'news_page.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  Workmanager().initialize(callbackDispatcher, isInDebugMode: kDebugMode);
   runApp(const MyApp());
 }
 
@@ -39,21 +45,14 @@ class _MyHomePageState extends State<MyHomePage> {
     // Set the group ID
     HomeWidget.setAppGroupId('group.leighawidget');
     // Mock read in some data and update the headline
-    updateHeadline(getNewsStories()[0]);
-  }
-
-  void updateHeadline(NewsArticle newHeadline) {
-    setState(() {
-      // Save the headline data to the widget
-      HomeWidget.saveWidgetData<String>('headline_title', newHeadline.title);
-      HomeWidget.saveWidgetData<String>(
-          'headline_description', newHeadline.description);
-      HomeWidget.updateWidget(iOSName: 'NewsWidgets');
-    });
+    HomescreenUtils.updateHeadline(getNewsStories()[0]);
   }
 
   int _selectedIndex = 0;
-  static final List<Widget> _pages = [const NewsListPage(), const ChartPage()];
+  static final List<Widget> _pages = [
+    const ChartPage(),
+    const NewsListPage(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -67,15 +66,15 @@ class _MyHomePageState extends State<MyHomePage> {
         },
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.news),
-            label: 'News',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(
               CupertinoIcons.graph_square,
             ),
             label: 'Charts',
-          )
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.news),
+            label: 'News',
+          ),
         ],
       ),
       body: Center(

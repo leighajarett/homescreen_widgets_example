@@ -1,20 +1,20 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="@style/Widget.Android.AppWidget.Container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:theme="@style/Theme.Android.AppWidgetContainer"
     android:id="@+id/widget_container"
-    >
+    style="@style/Widget.Android.AppWidget.Container"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:theme="@style/Theme.Android.AppWidgetContainer">
 
     <TextView
         android:id="@+id/headline_title"
         style="@style/Widget.Android.AppWidget.InnerView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_margin="8dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="14dp"
+        android:layout_marginLeft="14dp"
         android:text="Title"
         android:textSize="14sp" />
 
@@ -23,17 +23,24 @@
         style="@style/Widget.Android.AppWidget.InnerView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_margin="8dp"
+        android:layout_below="@+id/headline_title"
+        android:layout_marginTop="1dp"
         android:text="Title"
         android:textSize="14sp" />
 
     <ImageView
         android:id="@+id/widget_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="105dp"
+        android:layout_height="75dp"
+        android:layout_below="@+id/headline_description"
+        android:layout_alignBottom="@+id/headline_title"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="9dp"
+        android:layout_marginLeft="9dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="-134dp"
         android:layout_weight="1"
         android:src="@android:drawable/star_big_on" />
 
-</LinearLayout>
+</RelativeLayout>

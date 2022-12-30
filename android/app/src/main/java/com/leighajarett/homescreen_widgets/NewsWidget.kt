@@ -12,6 +12,7 @@ import es.antonborri.home_widget.HomeWidgetLaunchIntent
 import es.antonborri.home_widget.HomeWidgetProvider
 import java.io.File
 
+
 /**
  * Implementation of App Widget functionality.
  */
@@ -50,11 +51,20 @@ class NewsWidget : HomeWidgetProvider() {
                 setOnClickPendingIntent(R.id.headline_description, pendingIntentWithData)
 
 
-                // Set the widget image
+                // Get chart image and put it in the widget, if it exists
                 val imageName = widgetData.getString("filename", null)
-                val imageFile = File("${R.string.widget_image_directory_path}${imageName}")
-                val myBitmap: Bitmap = BitmapFactory.decodeFile(imageFile.absolutePath)
-                setImageViewBitmap(R.id.widget_image, myBitmap)
+                val imageFile = File("${context.filesDir.path}/${imageName}")
+                val imageExists = imageFile.exists()
+                if (imageExists) {
+                    println("image found @: ${imageFile.path}")
+                    val myBitmap: Bitmap = BitmapFactory.decodeFile(imageFile.absolutePath)
+                    setImageViewBitmap(R.id.widget_image, myBitmap)
+
+                } else {
+                    println("image not found!, looked @: ${context.filesDir.path}/${imageName}")
+                }
+
+
             }
 
             appWidgetManager.updateAppWidget(appWidgetId, views)

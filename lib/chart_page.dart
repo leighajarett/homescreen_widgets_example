@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:home_widget/home_widget.dart';
+import 'package:homescreen_widgets/homescreen_utils.dart';
 
 import 'news_data.dart';
 
@@ -21,6 +22,7 @@ class _ChartPageState extends State<ChartPage> {
   Uint8List? pngBytes;
   static const platform =
       MethodChannel('example.widget.dev/get_container_path');
+  static const String fileName = 'screenshot.png';
   String? imagePath;
 
   Future<void> _saveScreenShot() async {
@@ -30,46 +32,41 @@ class _ChartPageState extends State<ChartPage> {
       final image = await boundary.toImage(pixelRatio: 2.0); // image quality
       final byteData = await image.toByteData(format: ImageByteFormat.png);
       pngBytes = byteData!.buffer.asUint8List();
-      // TODO: return file from following method call, then handle the widget update elsewhere. because this code will be seen and judged :)
-      await convertImageToFile(pngBytes!);
+      await convertImageToFileAndSave(pngBytes!);
     } catch (e) {
-      debugPrint(e.toString());
+      debugPrint('_saveScreenShot: $e');
     }
   }
 
-  Future<File?> convertImageToFile(Uint8List image) async {
-    const fileName = 'screenshot.png';
+  Future<void> convertImageToFileAndSave(Uint8List image) async {
     try {
+      // Get path to directory where image will be saved from device
       final String path = await platform
           .invokeMethod('getContainerPath', {'appGroup': 'group.leighawidget'});
+      // create a file and write it to the device at given location
       final file = File('$path/$fileName');
       await file.writeAsBytes(image);
+    } on PlatformException catch (e) {
+      debugPrint("convertImageToFile: $e");
+    }
+  }
 
+  void _updateImageForWidget() {
+    try {
       HomeWidget.saveWidgetData<String>('filename', fileName);
       HomeWidget.updateWidget(
         name: 'NewsWidget',
         androidName: 'NewsWidget',
         iOSName: 'NewsWidgets',
       );
-      setState(() {
-        imagePath = file.path;
-        debugPrint(imagePath);
-      });
-      return file;
     } on PlatformException catch (e) {
       debugPrint(e.message);
     }
-
-    return null;
   }
 
   void updateHeadline(NewsArticle newHeadline) {
     setState(() {
-      // Save the headline data to the widget
-      HomeWidget.saveWidgetData<String>('headline_title', newHeadline.title);
-      HomeWidget.saveWidgetData<String>(
-          'headline_description', newHeadline.description);
-      HomeWidget.updateWidget(iOSName: 'NewsWidgets');
+      HomescreenUtils.updateHeadline(newHeadline);
     });
   }
 
@@ -98,7 +95,7 @@ class _ChartPageState extends State<ChartPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50.0),
               child: CupertinoButton.filled(
-                child: const Text("update state"),
+                child: const Text("update widget article"),
                 onPressed: () {
                   updateHeadline(getNewsStories()[1]);
                 },
@@ -111,6 +108,16 @@ class _ChartPageState extends State<ChartPage> {
                 child: const Text("save screenshot"),
                 onPressed: () {
                   _saveScreenShot();
+                },
+              ),
+            ),
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 50.0),
+              child: CupertinoButton.filled(
+                child: const Text("update homescreen widget image"),
+                onPressed: () {
+                  _updateImageForWidget();
                 },
               ),
             ),

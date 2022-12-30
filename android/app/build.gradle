@@ -63,6 +63,7 @@ android {
     buildFeatures {
         viewBinding true
     }
+    namespace 'com.leighajarett.homescreen_widgets'
 }
 
 flutter {

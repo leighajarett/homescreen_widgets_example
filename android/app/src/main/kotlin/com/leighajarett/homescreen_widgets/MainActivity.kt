@@ -23,8 +23,8 @@ class MainActivity: FlutterActivity() {
         methodChannel!!.setMethodCallHandler { call, result ->
             when (call.method) {
                 "getContainerPath" -> {
-                    var drawables = R.string.widget_image_directory_path
-                    result.success(drawables)
+                    var path: String = context.filesDir.path;
+                    result.success(path)
                 }
                 else -> {
                     result.notImplemented()
