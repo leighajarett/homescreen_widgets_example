@@ -1,18 +1,14 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:home_widget/home_widget.dart';
-import 'package:home_widget/home_widget_callback_dispatcher.dart';
 import 'package:homescreen_widgets/chart_page.dart';
 import 'package:homescreen_widgets/news_data.dart';
-import 'package:workmanager/workmanager.dart';
 
 import 'color_schemes.g.dart';
 import 'news_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  Workmanager().initialize(callbackDispatcher, isInDebugMode: kDebugMode);
   runApp(const MyApp());
 }
 
