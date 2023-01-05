@@ -26,7 +26,8 @@ class _ChartPageState extends State<ChartPage> {
     try {
       final RenderRepaintBoundary boundary = _globalKey.currentContext!
           .findRenderObject() as RenderRepaintBoundary;
-      final image = await boundary.toImage(pixelRatio: 2.0); // image quality
+      final image = await boundary.toImage(
+          pixelRatio: MediaQuery.of(context).devicePixelRatio); // image quality
       final byteData = await image.toByteData(format: ImageByteFormat.png);
       pngBytes = byteData!.buffer.asUint8List();
       await convertImageToFileAndSave(pngBytes!);

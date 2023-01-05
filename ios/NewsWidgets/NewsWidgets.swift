@@ -55,21 +55,29 @@ struct NewsArticleEntry: TimelineEntry {
     let displaySize: CGSize
 }
 
-//View that holds the contents of the widegt
+//View that holds the contents of the widget
 struct NewsWidgetsEntryView : View {
   var entry: Provider.Entry
 
+  var ChartImage: some View {
+    let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.leighawidget")?.appendingPathComponent(entry.filename)
+    do {
+      return try AnyView(Image(uiImage: UIImage(data:Data(contentsOf: url!))!)
+        .resizable()
+        .frame(width: entry.displaySize.height*0.5, height: entry.displaySize.height*0.5, alignment: .center))
+    } catch{
+      print("The image file could not be loaded")
+      return AnyView(EmptyView())
+    }
+  }
+
   var body: some View {
-    let path = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.leighawidget")?.appendingPathComponent(entry.filename).path
     VStack {
       Text(entry.title)
-      Text(entry.description)
-      if FileManager.default.fileExists(atPath: path!) {
-        Image(uiImage: UIImage(contentsOfFile: path! )!)
-          .resizable()
-          .frame(width: entry.displaySize.height*0.7, height: entry.displaySize.height*0.7, alignment: .center)
-      }
+      Text(entry.description).font(.system(size: 12)).padding(10)
+      ChartImage
     }
+
   }
 }
 
