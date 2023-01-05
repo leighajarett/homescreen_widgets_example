@@ -55,7 +55,7 @@ struct NewsWidgetsEntryView : View {
     var body: some View {
       VStack {
         Text(entry.title)
-        Text(entry.description)
+        Text(entry.description).font(.system(size: 12))
       }
     }
 }

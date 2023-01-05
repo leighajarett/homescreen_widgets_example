@@ -37,17 +37,18 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    // Mock read in some data
-    headline = getNewsStories()[0];
     // Set the group ID
     HomeWidget.setAppGroupId('group.leighawidget');
-    // Save the headline data to the widget
-    HomeWidget.saveWidgetData<String>('headline_title', headline.title);
 
+    // Mock read in some data and update the headline
+    final newHeadline = getNewsStories()[0];
+    HomeWidget.saveWidgetData<String>('headline_title', newHeadline.title);
     HomeWidget.saveWidgetData<String>(
-        'headline_description', headline.description);
-
-    HomeWidget.registerBackgroundCallback(HomescreenUtils.backgroundCallback);
+        'headline_description', newHeadline.description);
+    HomeWidget.updateWidget(
+      iOSName: 'NewsWidgets',
+      androidName: 'NewsWidget',
+    );
   }
 
   @override
