@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:home_widget/home_widget.dart';
-import 'package:homescreen_widgets/homescreen_utils.dart';
 import 'package:homescreen_widgets/news_data.dart';
 
 import 'color_schemes.g.dart';
