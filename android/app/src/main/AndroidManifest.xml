@@ -6,17 +6,6 @@
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:label="homescreen_widgets">
-        <receiver
-            android:name=".NewsWidget"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/news_widget_info" />
-        </receiver>
 
         <activity
             android:name=".MainActivity"
