@@ -5,6 +5,7 @@
     style="@style/Widget.Android.AppWidget.Container"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:theme="@style/Theme.Android.AppWidgetContainer">
 
     <TextView
@@ -16,8 +17,10 @@
         android:layout_alignParentLeft="true"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
+        android:background="@android:color/white"
         android:text="Title"
-        android:textSize="14sp" />
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/headline_description"
@@ -30,8 +33,9 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="4dp"
+        android:background="@android:color/white"
         android:text="Title"
-        android:textSize="14sp" />
+        android:textSize="16sp" />
 
     <ImageView
         android:id="@+id/widget_image"
@@ -47,6 +51,7 @@
         android:layout_marginBottom="-134dp"
         android:layout_weight="1"
         android:adjustViewBounds="true"
+        android:background="@android:color/white"
         android:scaleType="fitCenter"
         android:src="@android:drawable/star_big_on"
         android:visibility="visible"
