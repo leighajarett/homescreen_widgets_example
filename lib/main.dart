@@ -118,7 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Center(
-                        child: Image.asset('images/${article.image}'),
+                        child: Image.asset('assets/images/${article.image}'),
                       ),
                     ),
                   const SizedBox(height: 10.0),
