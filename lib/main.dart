@@ -34,6 +34,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  late String newHeadline;
+
   @override
   void initState() {
     super.initState();

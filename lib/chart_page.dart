@@ -9,49 +9,17 @@ import 'package:home_widget/home_widget.dart';
 
 class ChartPage extends StatefulWidget {
   const ChartPage({Key? key}) : super(key: key);
-
   @override
   State<ChartPage> createState() => _ChartPageState();
 }
 
 class _ChartPageState extends State<ChartPage> {
   final _globalKey = GlobalKey();
-  Uint8List? pngBytes;
-  static const platform =
-      MethodChannel('example.widget.dev/get_container_path');
-  static const String fileName = 'screenshot.png';
   String? imagePath;
-
-  Future<void> _saveScreenShot() async {
-    try {
-      final RenderRepaintBoundary boundary = _globalKey.currentContext!
-          .findRenderObject() as RenderRepaintBoundary;
-      final image = await boundary.toImage(
-          pixelRatio: MediaQuery.of(context).devicePixelRatio); // image quality
-      final byteData = await image.toByteData(format: ImageByteFormat.png);
-      pngBytes = byteData!.buffer.asUint8List();
-      await convertImageToFileAndSave(pngBytes!);
-    } catch (e) {
-      debugPrint('_saveScreenShot: $e');
-    }
-  }
-
-  Future<void> convertImageToFileAndSave(Uint8List image) async {
-    try {
-      // Get path to directory where image will be saved from device
-      final String path = await platform
-          .invokeMethod('getContainerPath', {'appGroup': 'group.leighawidget'});
-      // create a file and write it to the device at given location
-      final file = File('$path/$fileName');
-      await file.writeAsBytes(image);
-    } on PlatformException catch (e) {
-      debugPrint("convertImageToFile: $e");
-    }
-  }
 
   void _updateImageForWidget() {
     try {
-      HomeWidget.saveWidgetData<String>('filename', fileName);
+      // HomeWidget.saveWidgetData<String>('filename', fileName);
       HomeWidget.updateWidget(
         name: 'NewsWidget',
         androidName: 'NewsWidget',
@@ -88,8 +56,19 @@ class _ChartPageState extends State<ChartPage> {
               padding: const EdgeInsets.symmetric(horizontal: 50.0),
               child: CupertinoButton.filled(
                 child: const Text("save screenshot"),
-                onPressed: () {
-                  _saveScreenShot();
+                onPressed: () async {
+                  if (_globalKey.currentContext != null) {
+                    var path = await HomeWidget.renderFlutterWidget(
+                        'group.leighawidget',
+                        _globalKey.currentContext!,
+                        "screenshot",
+                        "filename");
+                    print(path);
+                    // _saveScreenShot();
+                    setState(() {
+                      imagePath = path;
+                    });
+                  }
                 },
               ),
             ),
@@ -119,7 +98,7 @@ class LineChartPainter extends CustomPainter {
       ..style = PaintingStyle.stroke;
 
     final dataPaint = Paint()
-      ..color = Colors.purple
+      ..color = Colors.blue
       ..strokeWidth = 2
       ..style = PaintingStyle.stroke;
 
