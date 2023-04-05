@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:home_widget/home_widget.dart';
 import 'package:homescreen_widgets/news_data.dart';
 
-class ArticleScreen extends StatelessWidget {
+// This should be removed when HomeWidget package is updated
+extension HomeWidgetRenderExtension on HomeWidget {
+  renderFlutterWidget(
+      String appGroup, BuildContext context, String a, String b) {
+    throw Error;
+  }
+}
+
+class ArticleScreen extends StatefulWidget {
   final NewsArticle article;
 
   const ArticleScreen({
@@ -10,13 +19,32 @@ class ArticleScreen extends StatelessWidget {
   });
 
   @override
+  State<ArticleScreen> createState() => _ArticleScreenState();
+}
+
+class _ArticleScreenState extends State<ArticleScreen> {
+  final _globalKey = GlobalKey();
+  String? imagePath;
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(article.title!),
+        title: Text(widget.article.title!),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
+        onPressed: () async {
+          if (_globalKey.currentContext != null) {
+            // var path = await HomeWidget.renderFlutterWidget(
+            //   'group.leighawidget',
+            //   _globalKey.currentContext!,
+            //   "screenshot",
+            //   "filename",
+            // );
+            setState(() {
+              // imagePath = path;
+            });
+          }
+        },
         label: const Text('Update Homescreen'),
       ),
       body: Padding(
@@ -25,23 +53,24 @@ class ArticleScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (article.image != null)
+              if (widget.article.image != null)
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Center(
-                    child: Image.asset('assets/images/${article.image}'),
+                    child: Image.asset('assets/images/${widget.article.image}'),
                   ),
                 ),
               const SizedBox(height: 10.0),
               Text(
-                article.description!,
+                widget.article.description!,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               const SizedBox(height: 20.0),
-              Text(article.articleText),
+              Text(widget.article.articleText),
               const SizedBox(height: 20.0),
               Center(
                 child: RepaintBoundary(
+                  key: _globalKey,
                   child: CustomPaint(
                     painter: LineChartPainter(),
                     child: const SizedBox(
@@ -52,7 +81,7 @@ class ArticleScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20.0),
-              Text(article.articleText),
+              Text(widget.article.articleText),
             ],
           ),
         ),
