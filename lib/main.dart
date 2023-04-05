@@ -3,7 +3,6 @@ import 'package:home_widget/home_widget.dart';
 import 'package:homescreen_widgets/news_data.dart';
 
 import 'article_screen.dart';
-import 'color_schemes.g.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,7 +17,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         useMaterial3: true,
-        colorScheme: lightColorScheme,
       ),
       home: const MyHomePage(),
     );
