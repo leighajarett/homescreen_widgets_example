@@ -37,13 +37,13 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   shared_preferences: ^2.0.15
-  # home_widget: ^0.1.6
+  home_widget: ^0.1.6
   native_font: ^1.1.0
   # path_provider: ^2.0.11
   # path_provider:
   #   path: ../../packages/packages/path_provider/path_provider_foundation
-  home_widget:
-    path: /Users/leighaj/Flutter Repositories/community plugins/home_widget
+  # home_widget:
+  #   path: /Users/leighaj/Flutter Repositories/community plugins/home_widget
 
 dev_dependencies:
   flutter_test:
@@ -63,16 +63,7 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
   uses-material-design: true
-
-  assets:
-  - assets/images/Flutter_Forward_Teaser_Still_1x1_v01_small.jpg
-  - assets/images/FlutterForward_Logo_Dark_Gradient.png
-
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

@@ -99,10 +99,11 @@ packages:
   home_widget:
     dependency: "direct main"
     description:
-      path: "/Users/leighaj/Flutter Repositories/community plugins/home_widget"
-      relative: false
-    source: path
-    version: "0.2.0+1"
+      name: home_widget
+      sha256: "9514c47422d511e87a3923ffed3fc4eb82540e168d7715d1560ceb1f02d5ec80"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.6"
   js:
     dependency: transitive
     description:
@@ -159,13 +160,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.2"
-  path_provider_foundation:
-    dependency: transitive
-    description:
-      path: "../../Flutter Repositories/packages/packages/path_provider/path_provider_foundation"
-      relative: true
-    source: path
-    version: "2.2.0"
   path_provider_linux:
     dependency: transitive
     description:
@@ -356,5 +350,5 @@ packages:
     source: hosted
     version: "0.2.0+3"
 sdks:
-  dart: ">=2.18.5 <3.0.0"
+  dart: ">=2.18.5 <4.0.0"
   flutter: ">=3.0.0"
