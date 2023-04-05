@@ -1,11 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:home_widget/home_widget.dart';
-import 'package:homescreen_widgets/chart_page.dart';
 import 'package:homescreen_widgets/news_data.dart';
 
+import 'article_screen.dart';
 import 'color_schemes.g.dart';
-import 'news_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,6 +42,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
     // Mock read in some data and update the headline
     final newHeadline = getNewsStories()[0];
+    updateHeadline(newHeadline);
+  }
+
+  void updateHeadline(NewsArticle newHeadline) {
+    // Save the headline data to the widget
     HomeWidget.saveWidgetData<String>('headline_title', newHeadline.title);
     HomeWidget.saveWidgetData<String>(
         'headline_description', newHeadline.description);
@@ -53,37 +56,57 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  int _selectedIndex = 0;
-  static final List<Widget> _pages = [
-    const ChartPage(),
-    const NewsListPage(),
-  ];
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: (int index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(
-              CupertinoIcons.graph_square,
+    return Material(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            const SizedBox(height: 30),
+            Container(
+              padding: const EdgeInsets.all(16.0),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.tertiaryContainer,
+              ),
+              child: Row(
+                children: [
+                  Text(
+                    'Top Stories',
+                    textAlign: TextAlign.left,
+                    style: Theme.of(context).textTheme.headlineLarge!,
+                  ),
+                ],
+              ),
             ),
-            label: 'Charts',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.news),
-            label: 'News',
-          ),
-        ],
-      ),
-      body: Center(
-        child: _pages.elementAt(_selectedIndex),
+            const SizedBox(height: 25),
+            Expanded(
+              child: ListView.separated(
+                separatorBuilder: (context, idx) {
+                  return const Divider();
+                },
+                itemCount: getNewsStories().length,
+                itemBuilder: (context, idx) {
+                  final article = getNewsStories()[idx];
+                  return ListTile(
+                    key: Key("$idx ${article.hashCode}"),
+                    title: Text(article.title!),
+                    subtitle: Text(article.description!),
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return ArticleScreen(article: article);
+                          },
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
