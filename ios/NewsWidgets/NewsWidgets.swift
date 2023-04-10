@@ -58,6 +58,22 @@ struct NewsArticleEntry: TimelineEntry {
 //View that holds the contents of the widget
 struct NewsWidgetsEntryView : View {
   var entry: Provider.Entry
+    
+    init(entry: Provider.Entry){
+            self.entry = entry
+            CTFontManagerRegisterFontsForURL(bundle.appending(path: "/fonts/Chewy-Regular.ttf") as CFURL, CTFontManagerScope.process, nil)
+        }
+    
+    var bundle: URL {
+            let bundle = Bundle.main
+            if bundle.bundleURL.pathExtension == "appex" {
+                // Peel off two directory levels - MY_APP.app/PlugIns/MY_APP_EXTENSION.appex
+                var url = bundle.bundleURL.deletingLastPathComponent().deletingLastPathComponent()
+                url.append(component: "Frameworks/App.framework/flutter_assets")
+                return url
+            }
+            return bundle.bundleURL
+        }
 
   var ChartImage: some View {
     let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.leighawidget")?.appendingPathComponent(entry.filename)
@@ -73,7 +89,7 @@ struct NewsWidgetsEntryView : View {
 
   var body: some View {
     VStack {
-      Text(entry.title)
+      Text(entry.title).font(Font.custom("Chewy", size: 13))
       Text(entry.description).font(.system(size: 12)).padding(10)
       ChartImage
     }

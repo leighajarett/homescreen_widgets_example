@@ -6,7 +6,7 @@ import 'article_screen.dart';
 
 const String appGroupId = 'group.leighawidget';
 const String iOSWidgetName = 'NewsWidgets';
-const String AndroidWidgetName = 'NewsWidget';
+const String androidWidgetName = 'NewsWidget';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,6 +21,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         useMaterial3: true,
+        textTheme: const TextTheme(
+          titleMedium: TextStyle(
+            fontFamily: "Chewy",
+            fontSize: 20,
+          ),
+        ),
       ),
       home: const MyHomePage(),
     );
@@ -54,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
         'headline_description', newHeadline.description);
     HomeWidget.updateWidget(
       iOSName: iOSWidgetName,
-      androidName: AndroidWidgetName,
+      androidName: androidWidgetName,
     );
   }
 
