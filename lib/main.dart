@@ -4,6 +4,10 @@ import 'package:homescreen_widgets/news_data.dart';
 
 import 'article_screen.dart';
 
+const String appGroupId = 'group.leighawidget';
+const String iOSWidgetName = 'NewsWidgets';
+const String AndroidWidgetName = 'NewsWidget';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
@@ -36,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     // Set the group ID
-    HomeWidget.setAppGroupId('group.leighawidget');
+    HomeWidget.setAppGroupId(appGroupId);
 
     // Mock read in some data and update the headline
     final newHeadline = getNewsStories()[0];
@@ -49,8 +53,8 @@ class _MyHomePageState extends State<MyHomePage> {
     HomeWidget.saveWidgetData<String>(
         'headline_description', newHeadline.description);
     HomeWidget.updateWidget(
-      iOSName: 'NewsWidgets',
-      androidName: 'NewsWidget',
+      iOSName: iOSWidgetName,
+      androidName: AndroidWidgetName,
     );
   }
 
