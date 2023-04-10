@@ -8,6 +8,7 @@
 import WidgetKit
 import SwiftUI
 
+
 // TimelineProvider has three methods
 struct Provider: TimelineProvider {
 
@@ -57,47 +58,72 @@ struct NewsArticleEntry: TimelineEntry {
 
 //View that holds the contents of the widget
 struct NewsWidgetsEntryView : View {
-  var entry: Provider.Entry
-
-  var ChartImage: some View {
-    let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.leighawidget")?.appendingPathComponent(entry.filename)
-    do {
-      return try AnyView(Image(uiImage: UIImage(data:Data(contentsOf: url!))!)
-        .resizable()
-        .frame(width: entry.displaySize.height*0.5, height: entry.displaySize.height*0.5, alignment: .center))
-    } catch{
-      print("The image file could not be loaded")
-      return AnyView(EmptyView())
+    var entry: Provider.Entry
+    
+    init(entry: Provider.Entry){
+        self.entry = entry
+        CTFontManagerRegisterFontsForURL(bundle.appending(path: "/fonts/Chewy-Regular.ttf") as CFURL, CTFontManagerScope.process, nil)
     }
-  }
-
-  var body: some View {
-    VStack {
-      Text(entry.title)
-      Text(entry.description).font(.system(size: 12)).padding(10)
-      ChartImage
-    }
-
-  }
-}
-
-struct NewsWidgets: Widget {
-//  Identifier for the widget
-    let kind: String = "NewsWidgets"
-
-// Configuration for the widget
-    var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: Provider()) { entry in
-            NewsWidgetsEntryView(entry: entry)
+    
+    var bundle: URL {
+        let bundle = Bundle.main
+        if bundle.bundleURL.pathExtension == "appex" {
+            // Peel off two directory levels - MY_APP.app/PlugIns/MY_APP_EXTENSION.appex
+            var url = bundle.bundleURL.deletingLastPathComponent().deletingLastPathComponent()
+            url.append(component: "Frameworks/App.framework/flutter_assets")
+            return url
         }
-        .configurationDisplayName("My Widget")
-        .description("This is an example widget.")
+        return bundle.bundleURL
+    }
+    
+    
+    var ChartImage: some View {
+        let _ = print("Filename", entry.filename)
+        let _ = print("Full filename", FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.leighawidget")?.appendingPathComponent(entry.filename))
+        if let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.leighawidget")?.appendingPathComponent(entry.filename) {
+            if let data = try? Data(contentsOf: url) {
+            if let uiImage = UIImage(data: data) {
+              let image = Image(uiImage: uiImage)
+                .resizable()
+                .frame(width: entry.displaySize.height*0.5, height: entry.displaySize.height*0.5, alignment: .center)
+              return AnyView(image)
+            }
+          }
+        }
+        print("The image file could not be loaded")
+        return AnyView(EmptyView())
+      }
+
+    
+    
+    var body: some View {
+        VStack {
+            Text(entry.title).font(Font.custom("Chewy", size: 13))
+            Text(entry.description).font(.system(size: 12)).padding(10)
+            ChartImage
+        }
+        
     }
 }
+    
+    struct NewsWidgets: Widget {
+        //  Identifier for the widget
+        let kind: String = "NewsWidgets"
+        
+        // Configuration for the widget
+        var body: some WidgetConfiguration {
+            StaticConfiguration(kind: kind, provider: Provider()) { entry in
+                NewsWidgetsEntryView(entry: entry)
+            }
+            .configurationDisplayName("My Widget")
+            .description("This is an example widget.")
+        }
+    }
+    
+    //struct NewsWidgets_Previews: PreviewProvider {
+    //    static var previews: some View {
+    //        NewsWidgetsEntryView(entry: NewsArticleEntry(date: Date(), title: "Preview Title", description: "Preview description", filename: "No Screenshot available"))
+    //            .previewContext(WidgetPreviewContext(family: .systemSmall))
+    //    }
+    //}
 
-//struct NewsWidgets_Previews: PreviewProvider {
-//    static var previews: some View {
-//        NewsWidgetsEntryView(entry: NewsArticleEntry(date: Date(), title: "Preview Title", description: "Preview description", filename: "No Screenshot available"))
-//            .previewContext(WidgetPreviewContext(family: .systemSmall))
-//    }
-//}

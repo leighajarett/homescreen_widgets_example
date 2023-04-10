@@ -6,6 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:home_widget/home_widget.dart';
+import 'package:homescreen_widgets/main.dart';
+import 'package:workmanager/workmanager.dart';
+
+final globalKey = GlobalKey();
 
 class ChartPage extends StatefulWidget {
   const ChartPage({Key? key}) : super(key: key);
@@ -14,21 +18,7 @@ class ChartPage extends StatefulWidget {
 }
 
 class _ChartPageState extends State<ChartPage> {
-  final _globalKey = GlobalKey();
   String? imagePath;
-
-  void _updateImageForWidget() {
-    try {
-      // HomeWidget.saveWidgetData<String>('filename', fileName);
-      HomeWidget.updateWidget(
-        name: 'NewsWidget',
-        androidName: 'NewsWidget',
-        iOSName: 'NewsWidgets',
-      );
-    } on PlatformException catch (e) {
-      debugPrint(e.message);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,10 +31,10 @@ class _ChartPageState extends State<ChartPage> {
             SizedBox(height: MediaQuery.of(context).size.height * .2),
             Center(
               child: RepaintBoundary(
-                key: _globalKey,
-                child: CustomPaint(
-                  painter: LineChartPainter(),
-                  child: const SizedBox(
+                key: globalKey,
+                child: const CustomPaint(
+                  painter: LineChartPainter(color: Colors.blue),
+                  child: SizedBox(
                     height: 200,
                     width: 200,
                   ),
@@ -54,23 +44,30 @@ class _ChartPageState extends State<ChartPage> {
             const SizedBox(height: 60),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50.0),
-              child: CupertinoButton.filled(
-                child: const Text("save screenshot"),
-                onPressed: () async {
-                  if (_globalKey.currentContext != null) {
-                    var path = await HomeWidget.renderFlutterWidget(
-                        'group.leighawidget',
-                        _globalKey.currentContext!,
-                        "screenshot",
-                        "filename");
-                    print(path);
-                    // _saveScreenShot();
-                    setState(() {
-                      imagePath = path;
-                    });
-                  }
-                },
-              ),
+              child: ElevatedButton(
+                  child: Text("Register Task"),
+                  onPressed: () {
+                    print("registering the task");
+                    Workmanager().registerPeriodicTask(
+                      "demo-task",
+                      "demo-task",
+                      // frequency: Duration(seconds: 1),
+                    );
+                  }),
+              // child: CupertinoButton.filled(
+              //   child: const Text("save screenshot"),
+              //   onPressed: () async {
+              //     if (globalKey.currentContext != null) {
+              //       var path = await HomeWidget.renderFlutterWidget(appGroupId,
+              //           globalKey.currentContext!, "screenshot", "filename");
+              //       print(path);
+              //       // _saveScreenShot();
+              //       setState(() {
+              //         imagePath = path;
+              //       });
+              //     }
+              //   },
+              // ),
             ),
             const SizedBox(height: 10),
             Padding(
@@ -78,7 +75,11 @@ class _ChartPageState extends State<ChartPage> {
               child: CupertinoButton.filled(
                 child: const Text("update homescreen widget image"),
                 onPressed: () {
-                  _updateImageForWidget();
+                  print("update homescreen widget image");
+                  HomeWidget.updateWidget(
+                    iOSName: iOSWidgetName,
+                    androidName: AndroidWidgetName,
+                  );
                 },
               ),
             ),
@@ -90,6 +91,10 @@ class _ChartPageState extends State<ChartPage> {
 }
 
 class LineChartPainter extends CustomPainter {
+  final Color color;
+
+  const LineChartPainter({required this.color});
+
   @override
   void paint(Canvas canvas, Size size) {
     final axisPaint = Paint()
@@ -98,7 +103,7 @@ class LineChartPainter extends CustomPainter {
       ..style = PaintingStyle.stroke;
 
     final dataPaint = Paint()
-      ..color = Colors.blue
+      ..color = color
       ..strokeWidth = 2
       ..style = PaintingStyle.stroke;
 

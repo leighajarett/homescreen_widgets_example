@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:home_widget/home_widget.dart';
+import 'package:homescreen_widgets/main.dart';
 
 import 'news_data.dart';
 
@@ -42,7 +43,8 @@ class NewsListPage extends StatelessWidget {
                 final article = getNewsStories()[idx];
                 return ListTile(
                   key: Key("$idx ${article.hashCode}"),
-                  title: Text(article.title!),
+                  title: Text(article.title!,
+                      style: Theme.of(context).textTheme.titleMedium),
                   subtitle: Text(article.description!),
                   onTap: () {
                     _showArticlePage(context, article);
@@ -62,8 +64,8 @@ class NewsListPage extends StatelessWidget {
     HomeWidget.saveWidgetData<String>(
         'headline_description', newHeadline.description);
     HomeWidget.updateWidget(
-      iOSName: 'NewsWidgets',
-      androidName: 'NewsWidget',
+      iOSName: iOSWidgetName,
+      androidName: AndroidWidgetName,
     );
   }
 
@@ -92,8 +94,6 @@ class NewsListPage extends StatelessWidget {
                   Text(article.description!,
                       style: Theme.of(context).textTheme.titleMedium),
                   const SizedBox(height: 20.0),
-                  Text(article.articleText),
-                  const SizedBox(height: 8),
                   Text(article.articleText),
                   const SizedBox(height: 8),
                   Text(article.articleText),
