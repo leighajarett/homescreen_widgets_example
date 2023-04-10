@@ -29,6 +29,7 @@ struct Provider: TimelineProvider {
         let title = userDefaults?.string(forKey: "headline_title") ?? "No Title Set"
         let description = userDefaults?.string(forKey: "headline_description") ?? "No Description Set"
         let filename = userDefaults?.string(forKey: "filename") ?? "No screenshot available"
+        print(filename)
         entry = NewsArticleEntry(date: Date(), title: title, description: description, filename: filename,  displaySize: context.displaySize)
       }
         completion(entry)
@@ -75,23 +76,23 @@ struct NewsWidgetsEntryView : View {
             return bundle.bundleURL
         }
 
-  var ChartImage: some View {
-    let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.leighawidget")?.appendingPathComponent(entry.filename)
-    do {
-      return try AnyView(Image(uiImage: UIImage(data:Data(contentsOf: url!))!)
-        .resizable()
-        .frame(width: entry.displaySize.height*0.5, height: entry.displaySize.height*0.5, alignment: .center))
-    } catch{
-      print("The image file could not be loaded")
-      return AnyView(EmptyView())
+   var ChartImage: some View {
+        if let uiImage = UIImage(contentsOfFile: entry.filename) {
+            let image = Image(uiImage: uiImage)
+                .resizable()
+                .frame(width: entry.displaySize.height*0.5, height: entry.displaySize.height*0.5, alignment: .center)
+            return AnyView(image)
+        }
+        print("The image file could not be loaded")
+        return AnyView(EmptyView())
     }
-  }
+
 
   var body: some View {
     VStack {
-      Text(entry.title).font(Font.custom("Chewy", size: 13))
-      Text(entry.description).font(.system(size: 12)).padding(10)
-      ChartImage
+        Text(entry.title).font(Font.custom("Chewy", size: 13))
+        Text(entry.description).font(.system(size: 12)).padding(10)
+        ChartImage
     }
 
   }

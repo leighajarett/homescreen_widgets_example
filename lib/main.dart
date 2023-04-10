@@ -8,6 +8,17 @@ const String appGroupId = 'group.leighawidget';
 const String iOSWidgetName = 'NewsWidgets';
 const String androidWidgetName = 'NewsWidget';
 
+void updateHeadline(NewsArticle newHeadline) {
+  // Save the headline data to the widget
+  HomeWidget.saveWidgetData<String>('headline_title', newHeadline.title);
+  HomeWidget.saveWidgetData<String>(
+      'headline_description', newHeadline.description);
+  HomeWidget.updateWidget(
+    iOSName: iOSWidgetName,
+    androidName: androidWidgetName,
+  );
+}
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
@@ -51,17 +62,6 @@ class _MyHomePageState extends State<MyHomePage> {
     // Mock read in some data and update the headline
     final newHeadline = getNewsStories()[0];
     updateHeadline(newHeadline);
-  }
-
-  void updateHeadline(NewsArticle newHeadline) {
-    // Save the headline data to the widget
-    HomeWidget.saveWidgetData<String>('headline_title', newHeadline.title);
-    HomeWidget.saveWidgetData<String>(
-        'headline_description', newHeadline.description);
-    HomeWidget.updateWidget(
-      iOSName: iOSWidgetName,
-      androidName: androidWidgetName,
-    );
   }
 
   @override

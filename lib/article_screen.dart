@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:home_widget/home_widget.dart';
 import 'package:homescreen_widgets/news_data.dart';
+import 'main.dart';
 
 // This should be removed when HomeWidget package is updated
 extension HomeWidgetRenderExtension on HomeWidget {
@@ -34,16 +35,17 @@ class _ArticleScreenState extends State<ArticleScreen> {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
           if (_globalKey.currentContext != null) {
-            // var path = await HomeWidget.renderFlutterWidget(
-            //   'group.leighawidget',
-            //   _globalKey.currentContext!,
-            //   "screenshot",
-            //   "filename",
-            // );
+            print("Rendering widget...");
+            var path = await HomeWidget.renderFlutterWidget(
+              _globalKey.currentContext!,
+              "screenshot",
+              "filename",
+            );
             setState(() {
-              // imagePath = path;
+              imagePath = path;
             });
           }
+          updateHeadline(widget.article);
         },
         label: const Text('Update Homescreen'),
       ),
@@ -53,13 +55,13 @@ class _ArticleScreenState extends State<ArticleScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (widget.article.image != null)
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Center(
-                    child: Image.asset('assets/images/${widget.article.image}'),
-                  ),
-                ),
+              // if (widget.article.image != null)
+              //   Padding(
+              //     padding: const EdgeInsets.all(16.0),
+              //     child: Center(
+              //       child: Image.asset('assets/images/${widget.article.image}'),
+              //     ),
+              //   ),
               const SizedBox(height: 10.0),
               Text(
                 widget.article.description!,
