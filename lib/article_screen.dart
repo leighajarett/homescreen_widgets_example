@@ -35,10 +35,10 @@ class _ArticleScreenState extends State<ArticleScreen> {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
           if (_globalKey.currentContext != null) {
-            print("Rendering widget part 2...");
+            print("Rendering widget...");
             var path = await HomeWidget.renderFlutterWidget(
               LineChart(),
-              fileName: 'screenshot', // <-- Pass in "screenshot" as fileName
+              fileName: 'screenshot',
               key: 'filename',
               logicalSize: _globalKey.currentContext!.size,
               pixelRatio:
@@ -73,12 +73,11 @@ class _ArticleScreenState extends State<ArticleScreen> {
               const SizedBox(height: 20.0),
               Text(widget.article.articleText),
               const SizedBox(height: 20.0),
-              // Center(
-              //   child: RepaintBoundary(
-              //     key: _globalKey,
-              //     child: LineChart(),
-              //   ),
-              // ),
+              Center(
+                // key should be removed in the first version
+                key: _globalKey,
+                child: LineChart(),
+              ),
               const SizedBox(height: 20.0),
               Text(widget.article.articleText),
             ],
