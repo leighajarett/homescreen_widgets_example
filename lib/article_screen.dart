@@ -35,11 +35,14 @@ class _ArticleScreenState extends State<ArticleScreen> {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
           if (_globalKey.currentContext != null) {
-            print("Rendering widget...");
+            print("Rendering widget part 2...");
             var path = await HomeWidget.renderFlutterWidget(
-              _globalKey.currentContext!,
-              "screenshot",
-              "filename",
+              LineChart(),
+              fileName: 'screenshot', // <-- Pass in "screenshot" as fileName
+              key: 'filename',
+              logicalSize: _globalKey.currentContext!.size,
+              pixelRatio:
+                  MediaQuery.of(_globalKey.currentContext!).devicePixelRatio,
             );
             setState(() {
               imagePath = path;
@@ -70,23 +73,34 @@ class _ArticleScreenState extends State<ArticleScreen> {
               const SizedBox(height: 20.0),
               Text(widget.article.articleText),
               const SizedBox(height: 20.0),
-              Center(
-                child: RepaintBoundary(
-                  key: _globalKey,
-                  child: CustomPaint(
-                    painter: LineChartPainter(),
-                    child: const SizedBox(
-                      height: 200,
-                      width: 200,
-                    ),
-                  ),
-                ),
-              ),
+              // Center(
+              //   child: RepaintBoundary(
+              //     key: _globalKey,
+              //     child: LineChart(),
+              //   ),
+              // ),
               const SizedBox(height: 20.0),
               Text(widget.article.articleText),
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class LineChart extends StatelessWidget {
+  const LineChart({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomPaint(
+      painter: LineChartPainter(),
+      child: const SizedBox(
+        height: 200,
+        width: 200,
       ),
     );
   }
